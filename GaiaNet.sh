@@ -19,12 +19,16 @@ function install_node() {
 # 启动 GaiaNet 节点
 echo "正在启动 GaiaNet 节点..."
 
+# 执行 gaianet start 命令
 gaianet start
 
+# 检查 gaianet start 的退出码
 if [ $? -ne 0 ]; then
     echo "启动节点过程中出现错误，请检查相关配置或稍后重试。"
-    exit 1
+else
+    echo "GaiaNet 节点启动成功！"
 fi
+
 
 # 获取并打印官方节点地址
 echo "================================================================"
