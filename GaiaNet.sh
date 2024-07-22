@@ -6,7 +6,7 @@ function install_node() {
     echo "请稍候..."
 
     # 下载并运行 GaiaNet 的 install.sh 脚本
-    curl -sSfL 'https://github.com/GaiaNet-AI/gaianet-node/releases/latest/download/install.sh' | bash
+    curl -sSfL 'https://raw.githubusercontent.com/GaiaNet-AI/gaianet-node/main/install.sh' | bash
 
     # 检查安装结果
     if [ $? -ne 0 ]; then
@@ -51,17 +51,26 @@ function uninstall_node() {
 function main_menu() {
     while true; do
         clear
-        echo "欢迎使用 GaiaNet 一键安装脚本"
-        echo "=============================="
+        echo "GaiaNet 一键安装脚本"
+        echo "======================="
         echo "1. 安装 GaiaNet 节点"
         echo "2. 启动 GaiaNet 节点"
         echo "3. 卸载 GaiaNet 节点"
         echo "4. 退出脚本"
-        echo "=============================="
+        echo "======================="
         read -p "请选择操作（输入对应数字）：" OPTION
 
         case $OPTION in
             1) install_node ;;
             2) start_node ;;
             3) uninstall_node ;;
-            4) echo "退出脚
+            4) echo "退出脚本。"; exit 0 ;;
+            *) echo "无效选项，请重新输入。" ;;
+        esac
+
+        read -n 1 -s -r -p "按任意键返回主菜单..."
+    done
+}
+
+# 执行主菜单函数
+main_menu
