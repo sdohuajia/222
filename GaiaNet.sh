@@ -51,6 +51,7 @@ function uninstall_node() {
 function main_menu() {
     while true; do
         clear
+        echo "脚本由推特 @ferdie_jhovie，免费开源，请勿相信收费"
         echo "GaiaNet 一键安装脚本"
         echo "======================="
         echo "1. 安装 GaiaNet 节点"
