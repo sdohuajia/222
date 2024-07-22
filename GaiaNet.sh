@@ -16,24 +16,21 @@ function install_node() {
 
     echo "GaiaNet 节点安装成功！"
 }
-# 启动 GaiaNet 节点
-echo "正在启动 GaiaNet 节点..."
 
-# 执行 gaianet start 命令
-gaianet start
+# 函数：启动 GaiaNet 节点
+function start_node() {
+    echo "正在启动 GaiaNet 节点..."
 
-# 检查 gaianet start 的退出码
-if [ $? -ne 0 ]; then
-    echo "启动节点过程中出现错误，请检查相关配置或稍后重试。"
-else
-    echo "GaiaNet 节点启动成功！"
-fi
+    # 执行 gaianet start 命令
+    gaianet start
 
-
-# 获取并打印官方节点地址
-echo "================================================================"
-echo "官方节点地址："
-gaianet info
+    # 检查 gaianet start 的退出码
+    if [ $? -ne 0 ]; then
+        echo "启动节点过程中出现错误，请检查相关配置或稍后重试。"
+    else
+        echo "GaiaNet 节点启动成功！"
+    fi
+}
 
 # 函数：卸载 GaiaNet 节点
 function uninstall_node() {
@@ -57,15 +54,17 @@ function main_menu() {
         echo "GaiaNet 一键安装脚本"
         echo "======================="
         echo "1. 安装 GaiaNet 节点"
-        echo "2. 卸载 GaiaNet 节点"
-        echo "3. 退出脚本"
+        echo "2. 启动 GaiaNet 节点"
+        echo "3. 卸载 GaiaNet 节点"
+        echo "4. 退出脚本"
         echo "======================="
         read -p "请选择操作（输入对应数字）：" OPTION
 
         case $OPTION in
             1) install_node ;;
-            2) uninstall_node ;;
-            3) echo "退出脚本。"; exit 0 ;;
+            2) start_node ;;
+            3) uninstall_node ;;
+            4) echo "退出脚本。"; exit 0 ;;
             *) echo "无效选项，请重新输入。" ;;
         esac
 
