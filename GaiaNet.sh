@@ -79,7 +79,8 @@ function main_menu() {
     echo "1. 安装 GaiaNet 节点"
     echo "2. 启动 GaiaNet 节点"
     echo "3. 卸载 GaiaNet 节点"
-    echo "4. 退出脚本"
+    echo "4. GaiaNet 节点信息"
+    echo "5. 退出脚本"
     echo "======================="
     read -p "请选择操作（输入对应数字）：" OPTION
 
@@ -87,11 +88,19 @@ function main_menu() {
         1) install_node ;;
         2) start_node ;;
         3) uninstall_node ;;
-        4) echo "退出脚本。"; exit 0 ;;
+        4) gaianet_info ;;
+        5) echo "退出脚本。"; exit 0 ;;
         *) echo "无效选项，请重新输入。" ;;
     esac
 
     read -n 1 -s -r -p "按任意键返回主菜单..."
+}
+
+# 函数：显示 GaiaNet 节点信息
+function gaianet_info() {
+    echo "显示 GaiaNet 节点信息..."
+    # 在这里编写显示 GaiaNet 节点信息的代码，例如调用 gaianet info 命令
+    gaianet info
 }
 
 # 执行主菜单函数
