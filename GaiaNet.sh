@@ -44,6 +44,9 @@ function install_node() {
 function start_node() {
     echo "正在启动 GaiaNet 节点..."
 
+    # 进入 GaiaNet 目录
+    cd /path/to/gaianet  # 替换为实际的 gaianet 目录路径
+
     # 执行 gaianet start 命令
     gaianet start
 
@@ -53,7 +56,11 @@ function start_node() {
     else
         echo "GaiaNet 节点启动成功！"
     fi
+
+    # 返回到脚本的当前目录
+    cd - >/dev/null
 }
+
 
 # 函数：卸载 GaiaNet 节点
 function uninstall_node() {
