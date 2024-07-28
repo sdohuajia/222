@@ -95,16 +95,19 @@ function main_menu() {
     case $OPTION in
         1) 
             install_node
-            read -n 1 -s -r -p "安装完成！按任意键返回主菜单..."
-            ;;
+            read -n 1 -s -r -p "安装完成！按任意键返回主菜单..." ;;
         2) 
-            start_node ;;
+            start_node
+            read -n 1 -s -r -p "按任意键返回主菜单..." ;;
         3) 
-            uninstall_node ;;
+            uninstall_node
+            read -n 1 -s -r -p "卸载完成！按任意键返回主菜单..." ;;
         4) 
-            gaianet_info ;;
+            gaianet_info
+            read -n 1 -s -r -p "按任意键返回主菜单..." ;;
         5) 
-            update_script ;;
+            update_script
+            read -n 1 -s -r -p "按任意键返回主菜单..." ;;
         6) 
             echo "退出脚本。"; exit 0 ;;
         *) 
@@ -113,7 +116,6 @@ function main_menu() {
 
     main_menu  # 返回主菜单
 }
-
 
 # 函数：显示 GaiaNet 节点信息
 function gaianet_info() {
