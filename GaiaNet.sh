@@ -79,73 +79,44 @@ function uninstall_node() {
 
 # 函数：显示主菜单
 function main_menu() {
-    while true; do
-        clear  # 清屏
-        echo "脚本由推特 @ferdie_jhovie 制作，免费开源，请勿相信收费"
-        echo "GaiaNet 一键安装脚本"
-        echo "======================="
-        echo "1. 安装 GaiaNet 节点"
-        echo "2. 启动 GaiaNet 节点"
-        echo "3. 卸载 GaiaNet 节点"
-        echo "4. GaiaNet 节点信息"
-        echo "5. 更新脚本"
-        echo "6. 退出脚本"
-        echo "======================="
-        read -p "请选择操作（输入对应数字）：" OPTION
+    clear  # 清屏
+    echo "脚本由推特 @ferdie_jhovie 制作，免费开源，请勿相信收费"
+    echo "GaiaNet 一键安装脚本"
+    echo "======================="
+    echo "1. 安装 GaiaNet 节点"
+    echo "2. 启动 GaiaNet 节点"
+    echo "3. 卸载 GaiaNet 节点"
+    echo "4. GaiaNet 节点信息"
+    echo "5. 退出脚本"
+    echo "======================="
+    read -p "请选择操作（输入对应数字）：" OPTION
 
-        case $OPTION in
-            1) 
-                install_node
-                press_any_key ;;
-            2) 
-                start_node
-                press_any_key ;;
-            3) 
-                uninstall_node
-                press_any_key ;;
-            4) 
-                gaianet_info
-                press_any_key ;;
-            5) 
-                update_script
-                press_any_key ;;
-            6) 
-                echo "退出脚本。"; exit 0 ;;
-            *) 
-                echo "无效选项，请重新输入。" ;;
-        esac
-    done
+    case $OPTION in
+        1) 
+            install_node
+            read -n 1 -s -r -p "安装完成！按任意键返回主菜单..."
+            ;;
+        2) 
+            start_node ;;
+        3) 
+            uninstall_node ;;
+        4) 
+            gaianet_info ;;
+        5) 
+            echo "退出脚本。"; exit 0 ;;
+        *) 
+            echo "无效选项，请重新输入。" ;;
+    esac
+
+    main_menu  # 返回主菜单
 }
+
 
 # 函数：显示 GaiaNet 节点信息
 function gaianet_info() {
     echo "显示 GaiaNet 节点信息..."
     # 在这里编写显示 GaiaNet 节点信息的代码，例如调用 gaianet info 命令
     gaianet info
-}
-
-# 函数：更新脚本
-function update_script() {
-    SCRIPT_PATH="./GaiaNet.sh"  # 定义脚本路径
-    SCRIPT_URL="https://raw.githubusercontent.com/sdohuajia/GaiaNet-/main/GaiaNet.sh"
-    
-    # 备份原始脚本
-    cp $SCRIPT_PATH "${SCRIPT_PATH}.bak"
-    
-    # 下载新脚本并检查是否成功
-    if curl -o $SCRIPT_PATH $SCRIPT_URL; then
-        chmod +x $SCRIPT_PATH
-        echo "脚本已更新。请退出脚本后，执行 bash GaiaNet.sh 重新运行此脚本。"
-    else
-        echo "更新失败。正在恢复原始脚本。"
-        mv "${SCRIPT_PATH}.bak" $SCRIPT_PATH
-    fi
-}
-
-# 函数：等待用户按任意键继续
-function press_any_key() {
-    read -n 1 -s -r -p "按任意键返回主菜单..."
-    echo
 }
 
 # 执行主菜单函数
