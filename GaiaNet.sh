@@ -20,7 +20,7 @@ function check_docker_installed() {
     fi
 }
 
-# 函数：安装 GaiaNet 节点
+# 函数：安装 GaiaNet 节点（包括初始化）
 function install_node() {
     echo "正在安装 GaiaNet 节点..."
     echo "请稍候..."
@@ -37,7 +37,12 @@ function install_node() {
         exit 1
     fi
 
+    # 初始化 GaiaNet 节点（下载模型文件和矢量数据库文件）
+    echo "正在初始化 GaiaNet 节点..."
+    gaianet init $HOME/gaianet/config.json
+
     echo "GaiaNet 节点安装成功！"
+    read -n 1 -s -r -p "按任意键返回主菜单..."
 }
 
 # 函数：启动 GaiaNet 节点
