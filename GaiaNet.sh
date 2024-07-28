@@ -80,7 +80,7 @@ function uninstall_node() {
 # 函数：显示主菜单
 function main_menu() {
     clear  # 清屏
-    echo "脚本由推特 @ferdie_jhovie，免费开源，请勿相信收费"
+    echo "脚本由推特 @ferdie_jhovie 制作，免费开源，请勿相信收费"
     echo "GaiaNet 一键安装脚本"
     echo "======================="
     echo "1. 安装 GaiaNet 节点"
@@ -92,16 +92,25 @@ function main_menu() {
     read -p "请选择操作（输入对应数字）：" OPTION
 
     case $OPTION in
-        1) install_node ;;
-        2) start_node ;;
-        3) uninstall_node ;;
-        4) gaianet_info ;;
-        5) echo "退出脚本。"; exit 0 ;;
-        *) echo "无效选项，请重新输入。" ;;
+        1) 
+            install_node
+            read -n 1 -s -r -p "安装完成！按任意键返回主菜单..."
+            ;;
+        2) 
+            start_node ;;
+        3) 
+            uninstall_node ;;
+        4) 
+            gaianet_info ;;
+        5) 
+            echo "退出脚本。"; exit 0 ;;
+        *) 
+            echo "无效选项，请重新输入。" ;;
     esac
 
-    read -n 1 -s -r -p "按任意键返回主菜单..."
+    main_menu  # 返回主菜单
 }
+
 
 # 函数：显示 GaiaNet 节点信息
 function gaianet_info() {
