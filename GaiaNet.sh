@@ -70,6 +70,9 @@ function uninstall_node() {
     echo "正在卸载 GaiaNet 节点..."
     echo "请稍候..."
 
+    # 停止 GaiaNet 节点
+    gaianet stop
+
     # 停止并删除 GaiaNet 节点容器
     docker stop gaianet-node
     docker rm gaianet-node
