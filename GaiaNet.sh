@@ -67,12 +67,9 @@ function uninstall_node() {
     echo "正在卸载 GaiaNet 节点..."
     echo "请稍候..."
 
-    # 停止 GaiaNet 节点
-    gaianet stop
-
     # 停止并删除 GaiaNet 节点容器
-    docker stop gaianet-node
-    docker rm gaianet-node
+    gaianet stop
+    gaianet rm
 
     # 删除 GaiaNet 节点数据和配置
     sudo rm -rf ~/.gaianet
@@ -91,7 +88,7 @@ function gaianet_info() {
 function main_menu() {
     while true; do
         clear  # 清屏
-        echo "脚本由推特 @ferdie_jhovie，免费开源，请勿相信收费"
+        echo "脚本由推特 @ferdie_jhovie 制作，免费开源，请勿相信收费"
         echo "GaiaNet 一键安装脚本"
         echo "======================="
         echo "1. 安装 GaiaNet 节点"
