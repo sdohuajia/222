@@ -34,7 +34,7 @@ function install_node() {
     # 检查安装结果
     if [ $? -ne 0 ]; then
         echo "安装过程中出现错误，请检查网络连接或稍后重试。"
-        exit 1
+        return 1
     fi
 
     # 初始化 GaiaNet 节点（下载模型文件和矢量数据库文件）
@@ -42,14 +42,13 @@ function install_node() {
     gaianet init $HOME/gaianet/config.json
 
     echo "GaiaNet 节点安装成功！"
-    read -n 1 -s -r -p "按任意键返回主菜单..."
 }
 
 # 函数：启动 GaiaNet 节点
 function start_node() {
     echo "正在启动 GaiaNet 节点..."
 
-    # 进入 GaiaNet 目录
+    # 进入 GaiaNet 目录（请替换为实际的 gaianet 目录路径）
     cd /path/to/gaianet  # 替换为实际的 gaianet 目录路径
 
     # 执行 gaianet start 命令
@@ -61,8 +60,6 @@ function start_node() {
     else
         echo "GaiaNet 节点启动成功！"
     fi
-
-    read -n 1 -s -r -p "按任意键返回主菜单..."
 }
 
 # 函数：卸载 GaiaNet 节点
@@ -81,7 +78,13 @@ function uninstall_node() {
     sudo rm -rf ~/.gaianet
 
     echo "GaiaNet 节点卸载完成。"
-    read -n 1 -s -r -p "按任意键返回主菜单..."
+}
+
+# 函数：显示 GaiaNet 节点信息
+function gaianet_info() {
+    echo "显示 GaiaNet 节点信息..."
+    # 在这里编写显示 GaiaNet 节点信息的代码，例如调用 gaianet info 命令
+    gaianet info
 }
 
 # 函数：显示主菜单
@@ -100,23 +103,31 @@ function main_menu() {
         read -p "请选择操作（输入对应数字）：" OPTION
 
         case $OPTION in
-            1) install_node ;;
-            2) start_node ;;
-            3) uninstall_node ;;
-            4) gaianet_info ;;
-            5) echo "退出脚本。"; exit 0 ;;
-            *) echo "无效选项，请重新输入。" ;;
+            1)
+                install_node
+                read -n 1 -s -r -p "按任意键返回主菜单..."
+                ;;
+            2)
+                start_node
+                read -n 1 -s -r -p "按任意键返回主菜单..."
+                ;;
+            3)
+                uninstall_node
+                read -n 1 -s -r -p "按任意键返回主菜单..."
+                ;;
+            4)
+                gaianet_info
+                read -n 1 -s -r -p "按任意键返回主菜单..."
+                ;;
+            5)
+                echo "退出脚本。"
+                exit 0
+                ;;
+            *)
+                echo "无效选项，请重新输入。"
+                ;;
         esac
     done
-}
-
-# 函数：显示 GaiaNet 节点信息
-function gaianet_info() {
-    echo "显示 GaiaNet 节点信息..."
-    # 在这里编写显示 GaiaNet 节点信息的代码，例如调用 gaianet info 命令
-    gaianet info
-
-    read -n 1 -s -r -p "按任意键返回主菜单..."
 }
 
 # 执行主菜单函数
