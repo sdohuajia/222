@@ -37,7 +37,10 @@ function install_node() {
         return 1
     fi
 
-    # 初始化 GaiaNet 节点（下载模型文件和矢量数据库文件）
+    # 使 gaianet CLI 工具在当前 shell 中可用
+    source /root/.bashrc
+
+    # 初始化 GaiaNet 节点
     echo "正在初始化 GaiaNet 节点..."
     gaianet init $HOME/gaianet/config.json
 
@@ -106,26 +109,4 @@ function main_menu() {
                 ;;
             2)
                 start_node
-                read -n 1 -s -r -p "按任意键返回主菜单..."
-                ;;
-            3)
-                uninstall_node
-                read -n 1 -s -r -p "按任意键返回主菜单..."
-                ;;
-            4)
-                gaianet_info
-                read -n 1 -s -r -p "按任意键返回主菜单..."
-                ;;
-            5)
-                echo "退出脚本。"
-                exit 0
-                ;;
-            *)
-                echo "无效选项，请重新输入。"
-                ;;
-        esac
-    done
-}
-
-# 执行主菜单函数
-main_menu
+                read -n 1 -s -r -p "按任意键返回
