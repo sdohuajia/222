@@ -2,7 +2,7 @@
 
 # 函数：安装 Docker（在 macOS 上一般直接安装 Docker Desktop，无需脚本安装）
 function install_docker() {
-    echo "请下载并安装 Docker Desktop https://www.docker.com/products/docker-desktop"
+    echo "请下载并安装 Docker Desktop：https://www.docker.com/products/docker-desktop"
     echo "安装完成后，无需手动启动和启用 Docker 服务。"
 }
 
@@ -14,6 +14,33 @@ function check_docker_installed() {
     else
         echo "Docker 已安装，跳过安装步骤。"
     fi
+}
+
+# 函数：安装 GaiaNet 节点（包括初始化）
+function install_node() {
+    echo "正在安装 GaiaNet 节点..."
+    echo "请稍候..."
+
+    # 检查并安装 Docker
+    check_docker_installed
+
+    # 下载并运行 GaiaNet 的 install.sh 脚本
+    curl -sSfL 'https://raw.githubusercontent.com/GaiaNet-AI/gaianet-node/main/install.sh' | bash
+
+    # 检查安装结果
+    if [ $? -ne 0 ]; then
+        echo "安装过程中出现错误，请检查网络连接或稍后重试。"
+        return 1
+    fi
+
+    # 使 gaianet CLI 工具在当前 shell 中可用
+    source ~/.bashrc
+
+    # 初始化 GaiaNet 节点
+    echo "正在初始化 GaiaNet 节点..."
+    gaianet init $HOME/gaianet/config.json
+
+    echo "GaiaNet 节点安装成功！"
 }
 
 # 函数：启动 GaiaNet 节点
@@ -47,6 +74,13 @@ function uninstall_node() {
     rm -rf ~/.gaianet
 
     echo "GaiaNet 节点卸载完成。"
+}
+
+# 函数：显示 GaiaNet 节点信息
+function gaianet_info() {
+    echo "显示 GaiaNet 节点信息..."
+    # 在这里编写显示 GaiaNet 节点信息的代码，例如调用 gaianet info 命令
+    ./gaianet info
 }
 
 # 函数：显示主菜单
