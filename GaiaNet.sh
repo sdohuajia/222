@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 检查是否以root用户运行脚本
-if [ "$(id -u)" != "0" ]; then
+if [[ $EUID -ne 0 ]]; then
     echo "此脚本需要以root用户权限运行。"
     echo "请尝试使用 'sudo -i' 命令切换到root用户，然后再次运行此脚本。"
     exit 1
@@ -39,20 +39,20 @@ function install_node() {
     check_docker_installed
 
     # 下载并运行 GaiaNet 的 install.sh 脚本
-    curl -sSfL 'https://raw.githubusercontent.com/GaiaNet-AI/gaianet-node/main/install.sh' | bash
-
-    # 检查安装结果
-    if [ $? -ne 0 ]; then
+    if ! curl -sSfL 'https://raw.githubusercontent.com/GaiaNet-AI/gaianet-node/main/install.sh' | bash; then
         echo "安装过程中出现错误，请检查网络连接或稍后重试。"
         return 1
     fi
 
     # 使 gaianet CLI 工具在当前 shell 中可用
-    source /root/.bashrc
+    source ~/.bashrc
 
     # 初始化 GaiaNet 节点
     echo "正在初始化 GaiaNet 节点..."
-    gaianet init $HOME/gaianet/config.json
+    if ! gaianet init "$HOME/gaianet/config.json"; then
+        echo "初始化过程中出现错误，请检查配置文件或稍后重试。"
+        return 1
+    fi
 
     echo "GaiaNet 节点安装成功！"
 }
@@ -65,10 +65,7 @@ function start_node() {
     cd /path/to/gaianet  # 替换为实际的 gaianet 目录路径
 
     # 执行 gaianet start 命令
-    gaianet start
-
-    # 检查 gaianet start 的退出码
-    if [ $? -ne 0 ]; then
+    if ! gaianet start; then
         echo "启动节点过程中出现错误，请检查相关配置或稍后重试。"
     else
         echo "GaiaNet 节点启动成功！"
@@ -119,4 +116,27 @@ function main_menu() {
                 ;;
             2)
                 start_node
-                read -n 1 -s -r -p "按任意键返回
+                read -n 1 -s -r -p "按任意键返回主菜单..."
+                ;;
+            3)
+                uninstall_node
+                read -n 1 -s -r -p "按任意键返回主菜单..."
+                ;;
+            4)
+                gaianet_info
+                read -n 1 -s -r -p "按任意键返回主菜单..."
+                ;;
+            5)
+                echo "退出脚本。"
+                exit 0
+                ;;
+            *)
+                echo "无效的选项，请重新选择。"
+                read -n 1 -s -r -p "按任意键返回主菜单..."
+                ;;
+        esac
+    done
+}
+
+# 运行主菜单
+main_menu
