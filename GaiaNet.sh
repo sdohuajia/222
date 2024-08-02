@@ -7,9 +7,6 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-# 脚本保存路径
-SCRIPT_PATH="$HOME/gaianet.sh"
-
 # 函数：安装 Docker
 function install_docker() {
     echo "正在安装 Docker..."
@@ -45,10 +42,21 @@ function install_node() {
     fi
 
     # 使 gaianet CLI 工具在当前 shell 中可用
-    source ~/.bashrc
+    if [ -f "$HOME/.bashrc" ]; then
+        source "$HOME/.bashrc"
+    elif [ -f "$HOME/.bash_profile" ]; then
+        source "$HOME/.bash_profile"
+    elif [ -f "$HOME/.profile" ]; then
+        source "$HOME/.profile"
+    fi
 
     # 初始化 GaiaNet 节点
     echo "正在初始化 GaiaNet 节点..."
+    if ! command -v gaianet &> /dev/null; then
+        echo "初始化过程中出现错误，找不到 gaianet 命令，请检查配置文件或稍后重试。"
+        return 1
+    fi
+
     if ! gaianet init "$HOME/gaianet/config.json"; then
         echo "初始化过程中出现错误，请检查配置文件或稍后重试。"
         return 1
