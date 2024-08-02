@@ -57,7 +57,11 @@ function install_node() {
         return 1
     fi
 
-    if ! gaianet init "$HOME/gaianet/config.json"; then
+    # 提供配置文件和基目录路径
+    GAIA_CONFIG="default"  # 请替换为适当的配置名称或 URL
+    GAIA_BASE_DIR="$HOME/gaianet"
+
+    if ! gaianet init --config $GAIA_CONFIG --base $GAIA_BASE_DIR; then
         echo "初始化过程中出现错误，请检查配置文件或稍后重试。"
         return 1
     fi
@@ -70,7 +74,7 @@ function start_node() {
     echo "正在启动 GaiaNet 节点..."
 
     # 进入 GaiaNet 目录（请替换为实际的 gaianet 目录路径）
-    cd /path/to/gaianet  # 替换为实际的 gaianet 目录路径
+    cd "$HOME/gaianet"  # 确保路径正确
 
     # 执行 gaianet start 命令
     if ! gaianet start; then
