@@ -30,6 +30,7 @@ function install_node() {
 # 函数：查看节点信息
 function view_node_info() {
     echo "获取节点信息..."
+    source /root/.bashrc
     gaianet info
     read -n 1 -s -r -p "按任意键返回主菜单..."
 }
